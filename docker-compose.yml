@@ -1,0 +1,18 @@
+services:
+  surrealdb:
+    env_file:
+      - .env
+    entrypoint: 
+      - /surreal 
+      - start 
+      - --auth
+      - --user
+      - $DB_USER
+      - --pass
+      - $DB_PASSWORD
+      - file:/db/saleor-marketplace.db
+    image: surrealdb/surrealdb:latest
+    volumes:
+      - ./db:/db
+    ports:
+      - 8000:8000
