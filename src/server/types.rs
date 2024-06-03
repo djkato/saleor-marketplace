@@ -8,9 +8,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SaleorApp {
     pub name: String,
+    pub slug: String,
     pub authors: Vec<AppAuthor>,
     pub description: String,
     pub versions: Vec<Version>,
+    pub curr_version: Version,
     /**
     All files will target ./public/app_data/<app-id>/
     */
@@ -33,9 +35,12 @@ pub struct SaleorApp {
     pub minimal_docker_compose: String,
     pub supported_apls: Vec<CustomAplType>,
     pub last_updated: chrono::DateTime<FixedOffset>,
+    pub categories: Vec<AppCategory>,
 }
 
-#[derive(Debug, Serialize, PartialEq, Deserialize, Clone)]
+#[derive(
+    Debug, Serialize, PartialEq, Deserialize, Clone, strum::EnumIter, strum::IntoStaticStr,
+)]
 pub enum DeploymentType {
     Docker,
     Podman,
@@ -54,3 +59,20 @@ pub struct AppAuthor {
 
 #[derive(Debug, Serialize, PartialEq, Deserialize, Clone)]
 pub struct CustomAplType(String);
+
+#[derive(
+    Debug, Serialize, PartialEq, Deserialize, Clone, strum::EnumIter, strum::IntoStaticStr,
+)]
+pub enum AppCategory {
+    CMS,
+    Messaging,
+    Taxes,
+    Payments,
+    CRM,
+    Monitoring,
+    Marketplaces,
+    Search,
+    SEO,
+    DashboardUtilities,
+    Other,
+}

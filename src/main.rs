@@ -1,4 +1,6 @@
 pub mod server;
+pub mod components;
+pub mod routes;
 
 #[cfg(feature = "ssr")]
 #[tokio::main]

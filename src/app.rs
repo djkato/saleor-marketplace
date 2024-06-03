@@ -1,9 +1,16 @@
+use crate::components::header::Header;
 use crate::error_template::{AppError, ErrorTemplate};
-use crate::server::types::SaleorApp;
-
+use crate::routes::apps::Apps;
+use crate::routes::guides::Guides;
+use crate::routes::home::Home;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
+
+#[derive(Params, PartialEq)]
+pub struct UrlAppParams {
+    slug: String,
+}
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -14,43 +21,25 @@ pub fn App() -> impl IntoView {
         <Stylesheet id="leptos" href="/pkg/saleor-marketplace.css"/>
 
         // sets the document title
-        <Title text="Welcome to Leptos"/>
+        <Title text="Saleors Harbour"/>
 
+        <Header/>
         // content for this welcome page
         <Router fallback=|| {
             let mut outside_errors = Errors::default();
             outside_errors.insert_with_default_key(AppError::NotFound);
             view! { <ErrorTemplate outside_errors/> }.into_view()
         }>
-            <main>
+            <main class="p-4 md:p-8 md:px-16">
                 <Routes>
-                    <Route path="" view=HomePage/>
+                    <Route path="" view=Home/>
+                    <Route path="/apps" view=Apps/>
+                    <Route path="/apps/" view=Apps/>
+                    <Route path="/apps/create" view=Apps/>
+                    <Route path="/apps/update/:slug" view=Apps/>
+                    <Route path="/guides" view=Guides/>
                 </Routes>
             </main>
         </Router>
-    }
-}
-
-#[server]
-pub async fn get_all_apps() -> Result<Vec<SaleorApp>, ServerFnError>{
-    let conn = crate::server::db::connect()?;
-    let res = conn.query("SELECT * FROM saleor_app WHERE saleor_app.name ='Sitemap generator' ");
-    dbg!(&res);
-    _ = res.await;
-    Err(ServerFnError::new("rip"))
-}
-
-/// Renders the home page of your application.
-#[component]
-fn HomePage() -> impl IntoView {
-    let apps = create_resource(|| (), |_| async move {get_all_apps().await});
-    view! {
-        <h1>"Welcome to Leptos!"</h1>
-        {move || match apps.get() {
-            Some(_d) => view! { <p>"loaded smt"</p> }.into_view(),
-            None => view! { <p>"loading..."</p> }.into_view(),
-        }}
-
-        <div></div>
     }
 }

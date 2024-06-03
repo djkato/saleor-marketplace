@@ -29,6 +29,7 @@ serde = { version = "1.0.202", features = ["derive"] }
 semver = { version = "1.0.23", features = ["serde"] }
 saleor-app-sdk = { version = "0.2.3", default-features = false }
 chrono = { version = "0.4.38", features = ["serde"] }
+strum = { version = "0.26.2", features = ["derive"] }
 
 [features]
 hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]

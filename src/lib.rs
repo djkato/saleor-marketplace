@@ -3,6 +3,8 @@ pub mod error_template;
 #[cfg(feature = "ssr")]
 pub mod fileserv;
 
+pub mod components;
+pub mod routes;
 pub mod server;
 
 #[cfg(feature = "hydrate")]

@@ -1,0 +1,1 @@
+2024/06/03-19:37:28.956980 624181 [WARN] [db/db_impl/db_impl_open.cc:2074] DB::Open() failed: IO error: lock hold by current process, acquire time 1717436248 acquiring thread 624180: db/LOCK: No locks available
